@@ -1,16 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Task1
 {
     public class TimerInfo : EventArgs
     {
+        /// <summary>
+        /// Represents an instant in time, typically expressed as a date and time of day.
+        /// </summary>
         public DateTime Dt { get; }
+
+        /// <summary>
+        /// .ctor
+        /// </summary>
+        /// <param name="dt">Represents an instant in time</param>
 
         public TimerInfo(DateTime dt)
         {
@@ -23,13 +26,33 @@ namespace Task1
 
     public class Timer
     {
+
+        /// <summary>
+        /// Time to end period
+        /// </summary>
+
         private int countTimerDown = 0;
 
+        /// <summary>
+        /// Delegate represents the method that will handle an event when the event provides data.
+        /// </summary>
+
         public event EventHandler<TimerInfo> Alarm = delegate { };
+
+        #region .ctor
+
+        /// <summary>
+        /// .ctor
+        /// </summary>
 
         public Timer()
         {
         }
+
+        /// <summary>
+        /// .ctor
+        /// </summary>
+        /// <param name="miliSeconds">Seconds for timer</param>
 
         public Timer(int miliSeconds)
         {
@@ -43,21 +66,43 @@ namespace Task1
             }
         }
 
-        private void OnAlarm(TimerInfo e)
+        #endregion
+
+        #region Alarm function
+
+        /// <summary>
+        /// Event on alarm
+        /// </summary>
+        /// <param name="timerInfo">An object that contains the event data.</param>
+
+        private void OnAlarm(TimerInfo timerInfo)
         {
             EventHandler<TimerInfo> eventHandler = Alarm;
 
             if (eventHandler != null)
             {
-                Alarm(this, e);
+                Alarm(this, timerInfo);
             }
         }
+
+        #endregion
+
+        #region Function for work timer
+
+        /// <summary>
+        /// Set time for timer
+        /// </summary>
+        /// <param name="miliSecond">Seconds for timer</param>
 
         public void SetTime(int miliSecond)
         {
             if (miliSecond > 0)
                 countTimerDown = miliSecond * 1000;
         }
+
+        /// <summary>
+        /// Function for starting timer
+        /// </summary>
 
         public void StartTimer()
         {
@@ -70,9 +115,15 @@ namespace Task1
             }
         }
 
+        /// <summary>
+        /// Reset timer
+        /// </summary>
+
         public void ResetTimer()
         {
             countTimerDown = 0;
         }
+
+        #endregion
     }
 }
